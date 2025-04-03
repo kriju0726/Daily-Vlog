@@ -1,6 +1,8 @@
-
-
 // jshint esversion:6
+
+
+require("dotenv").config();
+
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -20,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Connect to MongoDB Atlas
-mongoose.connect("mongodb+srv://kumarkrish07022002:6A2wbfPInobR7PM0@cluster0.w7p1f.mongodb.net/blogDB", {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -119,6 +121,8 @@ app.get("/posts/:postId", async (req, res) => {
 
 
 // Start the server
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
     console.log("Server started on port 3000");
 });
